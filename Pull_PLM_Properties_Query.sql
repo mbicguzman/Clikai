@@ -17,7 +17,11 @@ FROM (
                    END                         AS [Folder Name]
                  , [p].[PROP_CODE]             AS [Collateral Code]
                  , [l].[LOAN]                  AS [loan Number]
-                 , [vlk].[LoanKindDescription] AS [Loan Kind]
+                 , CASE
+					WHEN [vlk].[LoanKindDescription] = 'Fannie Mae' OR [vlk].[LoanKindDescription] = 'Freddie Mac' OR [vlk].[LoanKindDescription] = 'CMBS'
+						THEN 'GSE'
+					ELSE [vlk].[LoanKindDescription]
+				   END						   AS [Loan Kind]
                  , LEFT([p].[PROP_TYPE], 2)    AS [Property Type]
                  , [udf].[FacilityCode]
        FROM
@@ -35,7 +39,7 @@ FROM (
                    AND [l2].[RELEASE_DATE] IS NULL
                    AND (
                          [vlk].[LoanKindDescription] IN
-                         ( 'HUD', 'Fannie Mae', 'Freddie Mac', 'MBI' )
+                         ( 'HUD', 'Fannie Mae', 'Freddie Mac', 'MBI', 'CMBS' )
                          AND [l2].[PRIM_IND] = 'Y'
                        )
  
