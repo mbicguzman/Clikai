@@ -17,9 +17,9 @@ if (indexLocation = errorError.indexOf("already exists") > 0){
     errorCode = "Duplicate";
     input.parameters.userEmail = inputRecord.userEmailId;
     input.parameters.subject = "Clik.ai Upload Error - Duplicate Operating Statement in PLM";
-    input.parameters.body = "<p>Hello,</p><p>A duplicate Operating Statement already exists in PLM with the below parameters:</p><table><tr><td>Loan Number</td><td>" + loanNumber + 
+    input.parameters.body = "<head><style>table, th, td {border: 1px solid black;border-collapse: collapse;}th, td {padding-left: 10px;padding-right: 10px;}</style></head><body><p>Hello,</p><p>A duplicate Operating Statement already exists in PLM with the below parameters:</p><table><tr><td>Loan Number</td><td>" + loanNumber + 
                         "</td></tr><tr><td>Collateral Code</td><td>" + propCode + "</td></tr><tr><td>Statement Date</td><td>" + statementDate + "</td></tr><tr><td>Statement Type</td><td>"+ statementType +"</td></tr></table>" +
-                        "<p>This can be resolved by deleting the duplicate in PLM. Please submit a BI ticket if issues persist.</p><p>Thanks,</p>";
+                        "<p>This can be resolved by deleting the duplicate in PLM. Please submit a BI ticket if issues persist.</p><p>Thanks,</p></body>";
 } else if (indexLocation = errorError.indexOf("Collateral Code not found in database") > 0) {
     errorCode = "Collateral";
     input.parameters.userEmail = inputRecord.userEmailId;
@@ -33,6 +33,8 @@ if (indexLocation = errorError.indexOf("already exists") > 0){
 
 
 //return errorCode;
+//return input.parameters.subject;
+//return input.parameters.userEmail;
 return inputRecord;
 
 
