@@ -11,6 +11,7 @@ statementDate = inputRecord.Opstatmt.StatementDate;
 statementType = inputRecord.Opstatmt.UserDefType;
 
 errorCode = "";
+var test;
 
 if (errorStatusCode = 500 && errorMsg == "Unable to call service"){
     errorCode = "General";
