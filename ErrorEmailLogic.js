@@ -1,9 +1,13 @@
 
 let inputRecord = input.record;
 
-errorMsg = inputRecord.ErrorMsg.message;
-errorStatusCode = inputRecord.ErrorMsg.statusCode;
-errorError = inputRecord.ErrorMsg.error;
+if (inputRecord.ErrorMsg != null) {
+    errorMsg = inputRecord.ErrorMsg.message;
+    errorStatusCode = inputRecord.ErrorMsg.statusCode;
+    errorError = inputRecord.ErrorMsg.error;   
+}
+
+holdRec = inputRecord.holdSend;
 
 propCode = inputRecord.Opstatmt.PropCode;
 loanNumber = inputRecord.Opstatmt.LoanNumber;
@@ -11,9 +15,16 @@ statementDate = inputRecord.Opstatmt.StatementDate;
 statementType = inputRecord.Opstatmt.UserDefType;
 
 errorCode = "";
-var test;
 
-if (errorStatusCode = 500 && errorMsg == "Unable to call service"){
+if (holdRec == "TRUE") {
+    errorCode = "General";
+    input.parameters.userEmail = inputRecord.userEmailId;
+    input.parameters.ccEmail = "charper@merchantsbankofindiana.com";
+    input.parameters.subject = "Clik.ai Upload Error - Loan " + loanNumber;
+    input.parameters.body = "<head><style>table, th, td {border: 1px solid black;border-collapse: collapse;}th, td {padding-left: 10px;padding-right: 10px;}</style></head><body><p>Hello,</p><p>A line item internal category is missing for the Operating Statement with the below parameters:</p><table><tr><td>Loan Number</td><td>" + loanNumber + 
+                        "</td></tr><tr><td>Collateral Code</td><td>" + propCode + "</td></tr><tr><td>Statement Date</td><td>" + statementDate + "</td></tr><tr><td>Statement Type</td><td>"+ statementType +"</td></tr></table>" +
+                        "<p>Please review and update documents in Clik.ai and resubmit.</p><p>Thanks,</p></body>";
+} else if (errorStatusCode = 500 && errorMsg == "Unable to call service"){
     errorCode = "General";
     input.parameters.userEmail = inputRecord.userEmailId;
     input.parameters.ccEmail = "charper@merchantsbankofindiana.com; cguzman@merchantsbankofindiana.com; ngajjela@merchantscapital.com";
